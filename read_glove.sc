@@ -59,7 +59,7 @@ val b = "italian"
 val c = "spain"
 val factor = 0.4
 
-// vector substraction
+// word distance
 def diff_word(u: String, v: String) = (attribs(u) zip attribs(v)).map(p => diffV(p._1.toVector, p._2.toVector)) 
 
 val c_sim = for {

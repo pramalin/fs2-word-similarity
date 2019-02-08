@@ -6,13 +6,13 @@ import cats.syntax.semigroupk._
 import com.example.http4s.blaze.demo.server.endpoints._
 import com.example.http4s.blaze.demo.server.service.WordSimilarityService
 
-/*
+
 import com.example.http4s.blaze.demo.server.endpoints.auth.{
   BasicAuthHttpEndpoint,
   GitHubHttpEndpoint
 }
 import com.example.http4s.blaze.demo.server.service.{FileService, GitHubService}
-*/
+
 import com.example.http4s.blaze.demo.server.service.{FileService}
 import org.http4s.HttpRoutes
 import org.http4s.client.Client
@@ -29,7 +29,7 @@ class Module[F[_]](client: Client[F])(
   private val fileService = new FileService[F]
   private val wordSimilarityService = new WordSimilarityService[F]
 
-//  private val gitHubService = new GitHubService[F](client)
+  private val gitHubService = new GitHubService[F](client)
 
   def middleware: HttpMiddleware[F] = { routes: HttpRoutes[F] =>
     GZip(routes)
@@ -52,31 +52,28 @@ class Module[F[_]](client: Client[F])(
 
   private val timeoutEndpoints: HttpRoutes[F] =
     Timeout(1.second)(timeoutHttpEndpoint)
-/*
+
   private val mediaHttpEndpoint: HttpRoutes[F] =
     new JsonXmlHttpEndpoint[F].service
-*/
+
   private val multipartHttpEndpoint: HttpRoutes[F] =
     new MultipartHttpEndpoint[F](fileService).service
-/*
+
   private val gitHubHttpEndpoint: HttpRoutes[F] =
     new GitHubHttpEndpoint[F](gitHubService).service
 
   val basicAuthHttpEndpoint: HttpRoutes[F] =
     new BasicAuthHttpEndpoint[F].service
-*/
+
 
   private val similarityEndPoint: HttpRoutes[F] =
     new WordSimilarityEndpoint[F](wordSimilarityService).service
 
   val httpServices: HttpRoutes[F] = (
-/*
+
     compressedEndpoints <+> timeoutEndpoints
       <+> mediaHttpEndpoint <+> multipartHttpEndpoint
       <+> gitHubHttpEndpoint
-*/
-      compressedEndpoints <+> timeoutEndpoints
-      <+> multipartHttpEndpoint
       <+> similarityEndPoint
 
   )

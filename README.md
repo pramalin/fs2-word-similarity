@@ -46,3 +46,16 @@ This can be extremely slow.
 - ("india", "delhi", "japan"),
 - ("man", "woman", "boy"),
 - ("small", "smaller", "large")
+
+## Streaming web App
+This script is implemented also as a Streaming Web App
+
+**To compile:**
+ - copy the glove file to sec/main/resources.
+\> sbt compile
+sbt> run
+
+http://localhost:8080/similarity?word1=italy&word2=italian&word3=spain&factor=0.4
+
+Try different words and factors.
+Note: The browsers timeout unlike the REPL session, so try with lower factors first.
