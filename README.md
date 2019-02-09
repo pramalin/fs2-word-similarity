@@ -1,3 +1,4 @@
+
 Script to calculate word similarity from GloVe file.
 
 To run, download [glove.6B.50d.txt](https://www.kaggle.com/watts2/glove6b50dtxt)
@@ -59,3 +60,7 @@ http://localhost:8080/similarity?word1=italy&word2=italian&word3=spain&factor=0.
 
 Try different words and factors.
 Note: The browsers timeout unlike the REPL session, so try with lower factors first.
+
+_Live Demo_  
+https://word-similarity.herokuapp.com/similarity?word1=italy&word2=italian&word3=spain&factor=0.2
+

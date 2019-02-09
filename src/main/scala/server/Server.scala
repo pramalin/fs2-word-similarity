@@ -18,6 +18,7 @@ object Server extends IOApp {
 }
 
 object HttpServer {
+  val port = sys.env.getOrElse("PORT", "5000").toInt
 
   def httpApp[F[_]: Sync](ctx: Module[F]): HttpApp[F] =
     Router(
@@ -32,7 +33,7 @@ object HttpServer {
       client <- BlazeClientBuilder[F](global).stream
       ctx <- Stream(new Module[F](client))
       exitCode <- BlazeServerBuilder[F]
-        .bindHttp(8080)
+        .bindHttp(port, "0.0.0.0")
         .withHttpApp(httpApp(ctx))
         .serve
     } yield exitCode
